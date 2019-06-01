@@ -1,0 +1,144 @@
+
+$ease-out-quint:cubic-bezier(0.230, 1.000, 0.320, 1.000);
+$ease-in-quint:cubic-bezier(0.755, 0.050, 0.855, 0.060);
+
+
+.pokedex-screen{
+  background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent);
+  background-size:6px 4px;
+
+}
+
+
+
+@keyframes flicker{
+  $steps:20;
+  @for $i from 0 through $steps{
+    #{percentage($i*(1/$steps))}{
+      opacity:random();
+    }
+  }
+}
+
+
+.container-on{
+  animation:flicker 0.15s infinite;
+}
+
+
+@keyframes turn-on{
+  0%{
+    transform:scale(1,0.8) translate3d(0,0,0);
+    -webkit-filter:brightness(30);
+    filter:brightness(30);
+    opacity:1;
+  }
+  10%{
+    transform:scale(1,0.8) translate3d(0,100%,0);
+  }
+
+  30%{
+    transform:scale(1,0.8) translate3d(0,-100%,0);
+    opacity:1;
+  }
+
+  50%{
+    transform:scale(1.3,0.6) translate3d(0,100%,0);
+    -webkit-filter:brightness(30);
+    filter:brightness(30);
+    opacity:0;
+  }
+
+
+
+  70%{
+    transform:scale(1,1) translate3d(0,0,0);
+    -webkit-filter:contrast(0) brightness(0) ;
+    filter:contrast(0) brightness(0);
+    opacity:0;
+  }
+
+  100%{
+    transform:scale(1,1) translate3d(0,0,0);
+    -webkit-filter:contrast(1) brightness(1) saturate(1);
+    filter:contrast(1) brightness(1) saturate(1);
+    opacity:1;
+  }
+}
+@keyframes turn-off{
+  0%{
+    transform:scale(1,1.3) translate3d(0,0,0);
+    -webkit-filter:brightness(1);
+    filter:brightness(1);
+    opacity:1;
+  }
+  60%{
+    transform:scale(1.3,0.001) translate3d(0,0,0);
+    -webkit-filter:brightness(10);
+    filter:brightness(10);
+  }
+  100%{
+    animation-timing-function:$ease-in-quint;
+    transform:scale(0.000,0.0001) translate3d(0,0,0);
+    -webkit-filter:brightness(50);
+    filter:brightness(50);
+  }
+}
+.pokedex-screen-display{
+  width:100%;
+  height:100%;
+  border:none;
+}
+.container-off{
+  animation: turn-off 0.55s $ease-out-quint;
+  animation-fill-mode:forwards;
+}
+.container-on{
+  animation: turn-on 1s linear;
+  animation-fill-mode:forwards;
+}
+
+@keyframes overlay-anim{
+  0%{
+    visibility:hidden;
+  }
+  20%{
+    visibility:hidden;
+  }
+  21%{
+    visibility:visible;
+  }
+  100%{
+    visibility:hidden;
+  }
+}
+
+
+$led-colour : #24E0FF;
+
+.led-box {
+  height: auto;
+  width: 29%;
+  max-width: 25px;
+  margin: auto;
+}
+.led-blue {
+  transition: .3s;
+  transform:scale(1.5);
+  margin: auto;
+  height: auto;
+  width: 100%;
+  padding-top: 100%;
+  background-color: $led-colour;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px,
+  inset  darken($led-colour, 40%) 0 -1px 9px,
+  lighten($led-colour, 40%) 0 0px 14px;
+}
+.led-off{
+  transition: 1s !important;
+  background-color: darken($led-colour, 40%) !important;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px,
+  inset  darken($led-colour, 40%) 0 -1px 9px,
+  lighten($led-colour, 40%) 0 0px 3px !important;
+}

@@ -1,0 +1,198 @@
+@import './style.scss';
+
+$lavacolor:#c9f7ff;
+$lavablur:7px;
+/*various blob speeds*/
+$fast:15s;
+$med:18s;
+$slow:21s;
+
+.container {
+  position:absolute;
+  width:100%;
+    height: 100%;
+}
+
+
+.mid .wrapper {
+  width:100%;
+  height:100%;
+  //transform: rotateX(180deg);
+
+}
+.glass {
+  top:0;right:0;bottom:0;left:0;
+  content:'';
+  position:absolute;
+	background: lighten($lavacolor,7.5%);
+
+  overflow:hidden;
+}
+
+.goop {
+  background:$lavacolor;
+  width:100%;
+  height:50px;
+  position:absolute;
+  border-radius:50%;
+  filter:blur($lavablur);
+}
+.top-goop {
+  top:-25px;
+}
+.bot-goop {
+  bottom:-25px;
+}
+.blob {
+  border-radius:50%;
+  position:absolute;
+  background:$lavacolor;
+  filter:blur($lavablur);
+}
+
+@mixin blobCreator($hw, $l, $r, $t, $b, $anim, $spe, $del){
+
+	  width:$hw;
+	  height:$hw*1.2;
+	  left:$l;
+	  right:$r;
+	  top:$t;
+	  bottom:$b;
+		animation: $anim $spe infinite ease-in;
+		animation-delay:$del;
+
+}
+
+.blob:nth-of-type(1) {
+	@include blobCreator(5%, '', 5%, '', '', from-bottom, $fast, 0s);
+}
+.blob:nth-of-type(2) {
+	@include blobCreator(15%, '', 20%, -105%, '', from-bottom, $med, 2s);
+}
+.blob:nth-of-type(3){
+	@include blobCreator(30%, 10%, '',  -40%, '', from-top, $slow, 3s);
+}
+.blob:nth-of-type(4){
+	@include blobCreator(7%, 5%, '', -20%, '', from-top, $fast, 0s);
+}
+.blob:nth-of-type(5){
+	@include blobCreator(25%, '', 15%, '', -40%, from-bottom, $slow, 3s);
+}
+.blob:nth-of-type(6) {
+	@include blobCreator(12%, 35%, '', -20%, '', from-top, $med, 1s);
+}
+.blob:nth-of-type(7) {
+	@include blobCreator(7%, '', 60%, -105%, '', from-bottom, $fast, 10s);
+}
+.blob:nth-of-type(8) {
+	@include blobCreator(15%, '', 15%, -105%, '', from-bottom, $med, 11s);
+}
+.blob:nth-of-type(9){
+	@include blobCreator(27%, '', 95%, -105%, '', from-bottom, $slow, 10s);
+}
+.blob:nth-of-type(10){
+	@include blobCreator(8%, 45%, '', -20%, '', from-top, $med, 7s);
+}
+.blob:nth-of-type(11){
+	@include blobCreator(18%, 75%, '', -20%, '', from-top, $slow, 13s);
+}
+.blob:nth-of-type(12) {
+	@include blobCreator(12%, 55%, '', -20%, '', from-top, $med, 10.5s);
+}
+
+
+
+@keyframes from-bottom {
+  0% {
+    bottom:-30%;
+  }
+  100% {
+    bottom:120%;
+  }
+}
+@keyframes from-top {
+  0% {
+    top:-30%;
+  }
+  100% {
+    top:120%;
+  }
+}
+
+
+
+.pokeball-spin{
+  filter: blur(3px);
+
+    max-width:100%;
+    vertical-align: bottom;
+    z-index: 0;
+
+    @media screen and (min-width: $break-large) {
+      //grid-row-start: 1;
+      //grid-row-end: 1;
+      //grid-column-start: 2;
+      //grid-column-end: 2;
+    }
+    @media screen and (max-width: $break-small) {
+      //grid-row-start: 1;
+      //grid-row-end: 1;
+      //grid-column-start: 1;
+      //grid-column-end: 1;
+    }
+
+    .pokeball-div{
+      -webkit-transition: 0.2s linear;
+      position: relative;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      z-index: 0;
+
+      width:auto;
+      height:auto;
+
+        .pokeball{
+          -webkit-transition: 0.2s linear;
+          $size: 200px;
+          // Pokeball code
+          .o-pokeball {
+            //-webkit-transform:scale(1.5);
+            width: $size;
+            height: $size;
+            border-radius: $size;
+            //border: solid ($size/25) black;
+            position: relative;
+            background: linear-gradient(to bottom, #EEEEEE 0%,#FFFFFF 100%);;
+            margin: auto;
+
+            &:before,
+            &:after{
+              content: "";
+              display: block;
+            }
+            &:before {
+              width: $size;
+              height: ($size/2) -($size/25/2);
+              border-bottom: solid ($size/25) #333;
+              border-radius: ($size/2) ($size/2) 0 0;
+              background: lighten(#ff0000,30%) ;
+            }
+            &:after {
+              width: $size/5;
+              height: $size/5;
+              background:  #fff;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%,-50%);
+              border-radius: 50%;
+              box-shadow: 0 0 0 ($size/50) #333,
+                          0 0 0 ($size/25) #fff,
+                          0 0 0 ($size/14) #333,
+                          0 0 ($size/10) ($size/17) rgba(0,0,0,0.4);
+            }
+          }
+      }
+    }
+}

@@ -1,0 +1,560 @@
+@import './style.scss';
+
+
+              .events-outer-container-enable{
+
+                background-color: rgba(25, 25, 25, 1) !important;
+              }
+              .events-outer-container-disable{
+
+                background-color: rgba(0, 0, 0, 0.0) !important;
+              }
+
+
+              .events-outer-container{
+	              position:absolute;
+                height:100%;
+                width:100%;
+                top:0%;
+                left:0%;
+                z-index: 10;
+                transition: 0.75s;
+                pointer-events: none;
+
+                .catch-container-active{@include browserSupport(transform,translateX(0%) !important);}
+                .evolve-container-active{@include browserSupport(transform,translateX(0%)  !important);}
+                .catch-container-inactive{@include browserSupport(transform,translateX(-130%)); }
+                .evolve-container-inactive{@include browserSupport(transform,translateX(130%)); }
+
+                .event-container{
+                  position:absolute;
+                  height:100%;
+                  width:100%;
+                  top:0%;
+                  left:0%;
+                  transition: 0.75s;
+
+                  .event-border-box{
+                    position:absolute;
+                    height:50%;
+                    width:100%;
+                    top:15%;
+                    left:0%;
+
+                    .catch-background{
+                     position:absolute;
+                     height:100%;
+                     width:130%;
+                     top:0%;
+                     left:-15%;
+
+                      z-index:1;
+                      overflow: hidden;
+                      border-radius: 7em;
+                      border: 3px ridge #00f;
+
+                      background: radial-gradient(ellipse at center, rgba(0,0,255,1) 1%,rgba(0,0,102,1) 84%,rgba(0,0,102,1) 100%,rgba(0,0,102,1) 100%);
+
+
+
+                        .rain {
+                          @include height-width(5px, 50px);
+                          position: absolute;
+                          background: #eeffa0;
+                          background: linear-gradient(to right, rgba(255,255,255,0) 0%, #55f 100%);
+
+                        }
+
+                        $rain: 200;
+
+                        @for $i from 1 through $rain {
+                          $left: (random(100) + 100) * 1%;
+                          $top: random(100) * 1%;
+                          $opacity: (random(30) + 30) * 0.01;
+                          $delay: (random(200)/10) - 1s;
+
+                          @keyframes rain-#{$i} {
+                            0% {
+                              left: -$left;
+                              opacity: $opacity;
+                              top: $top;
+                            }
+                            100% {
+                              opacity: 0;
+                              left: $left + 40%;
+                            }
+                          }
+
+                          .rain:nth-of-type(#{$i}) {
+                            $name: rain-#{$i};
+                            $duration: random(2) + 4s;
+                            @include browserSupport(animation, $name $duration $delay infinite linear);
+                            left: -$left;
+                            opacity: $opacity;
+                            top: $top;
+                          }
+                        }
+
+
+
+                    }
+                    .catch-foreground-container{
+                      position:absolute;
+                      height:100%;
+                      width:100%;
+                      top:0%;
+                      left:0%;
+                      overflow:hidden;
+                      z-index:2;
+
+                      .catch-sprite{
+                        position:absolute;
+                        height:70%;
+                        width:100%;
+                        bottom:15%;
+                        left:0%;
+                        z-index:3;
+
+        								display: flex;
+
+        								 .wild-pokemon{
+                              position:absolute;
+                              @include browserSupport(transform, translate(-50%, -10%) scale(1.5));
+                              height: auto;
+                              width: auto;
+                              bottom:0%;
+                              padding-bottom: 3%;
+                              left: 50%;
+                              z-index: 2;
+                            }
+
+                        @keyframes caught{
+                          0%{
+                            @include browserSupport(transform, translate(-50%, -10%) scale(1.5));
+                            @include browserSupport(filter, brightness(100%));
+                          }
+                          50%{
+                            @include browserSupport(transform, translate(-50%, -10%) scale(1.5));
+                            @include browserSupport(filter, brightness(100%));
+                          }
+                          70%{
+                            @include browserSupport(transform, translate(-50%, -10%) scale(1.5));
+                            @include browserSupport(filter, brightness(500%));
+                          }
+                          100%{
+                            @include browserSupport(transform, translate(-50%, -10%) scale(0));
+                            @include browserSupport(filter, brightness(500%));
+                          }
+                        }
+
+                        @keyframes run{
+                          0%{
+                            @include browserSupport(transform, translate(-50%, -10%) scale(1.5));
+                          }
+                          70%{
+                            @include browserSupport(transform, translate(-50%, -10%) scale(1.5));
+                          }
+                          100%{
+                            @include browserSupport(transform, translate(-1200%, -10%) scale(1.5));
+                          }
+                        }
+
+                        .wild-pokemon-caught{
+
+                            @include browserSupport(transform, translate(-50%, -10%) scale(0) !important);
+                            @include browserSupport(filter, brightness(500%) !important);
+                          @include browserSupport(animation, caught 2s linear);
+
+                        }
+                        .wild-pokemon-run{
+
+                            @include browserSupport(transform, translate(-1200%, -10%) scale(1.5) !important);
+                          @include browserSupport(animation, run 2.5s linear);
+
+                        }
+
+                      .pokeball-throw-animation{
+                        position:absolute;
+                        height:auto;
+                        width:auto;
+                        top:50%;
+                        left:50%;
+                        @include browserSupport(transform, translate(-50%, -50%));
+                        z-index:20;
+
+
+                        @keyframes pokeball-throw-hit{
+                          0%{@include browserSupport(transform, scale(30) translateY(80%) rotateZ(0deg));}
+                          10%{@include browserSupport(transform, scale(21) translateY(55%) rotateZ(7deg));}
+                          20%{@include browserSupport(transform, scale(12) translateY(30%) rotateZ(14deg));}
+                          30%{@include browserSupport(transform, scale(3) translateY(5%) rotateZ(14deg));}
+                          40%{@include browserSupport(transform, scale(3) translateY(10%) rotateZ(10deg));}
+                          50%{@include browserSupport(transform, scale(3) translateY(0%) rotateZ(7deg));}
+                          70%{@include browserSupport(transform, scale(3) translateY(0%) rotateZ(7deg));}
+                          90%{@include browserSupport(transform, scale(3) translateY(100%) rotateZ(0deg));}
+                          100%{@include browserSupport(transform, scale(3) translateY(100%) rotateZ(0deg));}
+                        }
+                        @keyframes pokeball-throw-miss{
+                          0%{@include browserSupport(transform, scale(35) translateY(120%) translateX(80%) rotateZ(-60deg));}
+                          100%{@include browserSupport(transform, scale(1.5) translateY(160%)  translateX(580%) rotateZ(60deg));}
+                        }
+
+                        .pokeball-hold-img{display:none;}
+
+                        .pokeball-throw-hit-img{
+                          z-index: 5;
+                          image-rendering: pixelated;
+                          @include browserSupport(transform, scale(3) translateY(100%) rotateZ(0deg) !important);
+
+                          @include browserSupport(animation, pokeball-throw-hit 2s linear);
+                        }
+                        .pokeball-throw-miss-img{
+
+                          z-index: 5;
+                          image-rendering: pixelated;
+                          @include browserSupport(transform, scale(1.5) translateY(160%)  translateX(500%) rotateZ(60deg) !important);
+
+                          @include browserSupport(animation, pokeball-throw-miss 1.5s ease-out);
+                        }
+                      }
+
+                      .catch-base{
+                        position: absolute;
+                        height: 50px;
+                        width: 180px;
+                        bottom: 0%;
+                        left: 50%;
+                        @include browserSupport(transform, translate(-90px, 20%));
+
+                        box-sizing: border-box;
+                        background: #a84909;
+                        border: 9px ridge green;
+                        border-radius: 50%;
+
+                        @include browserSupport(filter, blur(3px));
+
+
+                      }
+                    }
+                      .catch-radius-container-disable{
+                        display:none;
+                      }
+                      .catch-radius-container{
+                        position:absolute;
+                        height:80%;
+                        width:33.3%;
+                        top:10%;
+                        left:33.3%;
+                        z-index:4;
+
+                        @keyframes upDown {
+                          0% {
+                            @include browserSupport(transform,translateY(-300%));
+                          }
+                          50% {
+                            @include browserSupport(transform,translateY(300%));
+                          }
+                          100% {
+                            @include browserSupport(transform,translateY(-300%));
+                          }
+                        }
+                        @keyframes spin {
+                          0% {
+                            @include browserSupport(transform,rotateZ(0deg));
+                          }
+                          100% {
+                            @include browserSupport(transform,rotateZ(360deg));
+                          }
+                        }
+
+                        .catch-retical-container{
+                          position:absolute;
+                          height:33.3%;
+                          width:33.3%;
+                          top:33.3%;
+                          left:33.3%;
+
+                          @include browserSupport(animation, spin 30s linear infinite);
+
+                          .catch-retical{
+                            margin:auto;
+                            @include height-width(auto, 50%);
+                            padding-top:50%;
+
+                            border-radius:50%;
+                            border:3px solid #fff;
+
+                            @include browserSupport(animation, upDown 3s ease-in-out infinite);
+
+                          }
+                        }
+                        .catch-radius-container{
+                          position:absolute;
+                          height:100%;
+                          width:100%;
+                          top:0%;
+                          left:0%;
+
+                          .catch-radius{
+                            position:absolute;
+                            height:auto;
+                            width:50%;
+                            top:50%;
+                            left:50%;
+                            @include browserSupport(transform, translate(-50%, -50%));
+                            padding-top: 50%;
+                            border-radius:50%;
+                            border:5px double #eee
+                          }
+                        }
+                      }
+                    }
+
+                    .evolve-background{
+                      z-index:1;
+                      position:absolute;
+                      height:100%;
+                      width:130%;
+                      top:0%;
+                      left:-15%;
+
+                      z-index:1;
+                      overflow: hidden;
+
+                      border-radius: 7em;
+                      border: 3px ridge #f00;
+                      background-color: #380502;
+                      background: radial-gradient(ellipse at center,
+                                                  #380502 1%,
+                                                  darken(#380502, 20%) 84%,
+                                                  darken(#380502, 20%) 100%,
+                                                  darken(#380502, 20%) 100%);
+
+
+                      @keyframes spin {
+                        0%{ @include browserSupport(transform, rotate(0deg)); }
+                        100%{ @include browserSupport(transform, rotate(359deg)); }
+                      }
+
+                      .starbust-container{
+                          position : absolute;
+                          left: 50%;
+                          top: 50%;
+                          @include browserSupport(transform, translate(-50%, -50%));
+
+                          @include browserSupport(animation, spin 8s infinite linear);
+
+                          .starbust-wheel {
+                            @include height-width(1500px, 1500px);
+                            overflow: hidden;
+                            position : absolute;
+                            border-radius: 50%;
+                            left: 50%;
+                            top: 50%;
+                            @include browserSupport(transform, translate(-50%, -50%));
+
+                          div {
+                            margin: 0;
+                            @include height-width(50%, 50%);
+                            padding: 0;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform-origin: 0 0;
+                          }
+
+                          $rays: 20;
+
+                            @for $i from 1 through $rays {
+                              $deg: 18deg;
+
+                              div:nth-child(#{$i}) {
+                                  @include browserSupport(transform, rotate($deg * $i) skewX(72deg));
+                              }
+
+                            }
+
+                            div:nth-child(odd) {
+                              background-image: linear-gradient(-197deg, lighten(#380502, 20%) 5%, transparent 75%);
+                            }
+                          }
+                        }
+
+                    }
+                    .evolve-foreground-container{
+                      position:absolute;
+                      height:100%;
+                      width:100%;
+                      top:0%;
+                      left:0%;
+                      overflow:hidden;
+                      z-index:2;
+
+                      .evolve-sprites{
+                        position:absolute;
+                        height:100%;
+                        width:100%;
+                        top:0%;
+                        left:0%;
+                        z-index:3;
+
+                        $evoAni: evolve1, evolve2;
+                        @for $i from 1 through length($evoAni) {
+                          @keyframes #{nth($evoAni, $i)}{
+                            $scale1: $evolveScale;
+	                          $scale2: 0;
+                            @if $i == 2 {$scale1: 0}
+                            @if $i == 2 {$scale2: $evolveScale}
+                            0%{ @include browserSupport(transform,translate(-50%, -10%) scale($scale1));@include browserSupport(filter, brightness(100%)); }
+                            50%{ @include browserSupport(transform,translate(-50%, -10%) scale($scale1)); @include browserSupport(filter, brightness(100%)); }
+                            55%{ @include browserSupport(transform,translate(-50%, -10%) scale($scale1)); @include browserSupport(filter, brightness(500%)); }
+                            63%{ @include browserSupport(transform,translate(-50%, -10%) scale($scale2)); @include browserSupport(filter, brightness(500%)); }
+                            71%{ @include browserSupport(transform,translate(-50%, -10%) scale($scale1)); @include browserSupport(filter, brightness(500%)); }
+                            79%{ @include browserSupport(transform,translate(-50%, -10%) scale($scale2)); @include browserSupport(filter, brightness(500%)); }
+                            87%{ @include browserSupport(transform,translate(-50%, -10%) scale($scale1)); @include browserSupport(filter, brightness(500%)); }
+                            95%{ @include browserSupport(transform,translate(-50%, -10%) scale($scale2)); @include browserSupport(filter, brightness(500%)); }
+                            100%{ @include browserSupport(transform,translate(-50%, -10%) scale($scale2)); @include browserSupport(filter, brightness(100%)); }
+                          }
+                        }
+
+                        .evolve-sprite1{
+                          img{
+                            @include browserSupport(animation-name, evolve1);
+                            @include browserSupport(transform,translate(-50%, -10%) scale(0) !important);
+                            @include browserSupport(filter, brightness(500%));
+                          }
+                        }
+                        .evolve-sprite2{
+                          img{
+                            @include browserSupport(animation-name, evolve2);
+                            @include browserSupport(transform,translate(-50%, -10%) scale(1.5));
+                            @include browserSupport(filter, brightness(100%));
+                          }
+                        }
+                        .evolve-sprite1-disable{
+                          display:none;
+                        }
+
+                        .evolve-sprite1,
+                        .evolve-sprite2,
+                        .evolve-sprite2-disable{
+                          position:absolute;
+                          height:70%;
+                          width:100%;
+                          bottom:15%;
+                          left:0%;
+                          z-index:3;
+
+
+                          @include browserSupport(animation-duration, 10s);
+
+                          img{
+                               position:absolute;
+                               @include browserSupport(transform, translate(-50%, -10%) scale(1.5));
+                               height: auto;
+                               width: auto;
+                               bottom:0%;
+                               padding-bottom: 3%;
+                               left: 50%;
+                               z-index: 2;
+
+                              @include browserSupport(animation-duration, 8s);
+
+
+                             }
+                        }
+
+                        .evolve-base{
+                          position: absolute;
+                          height: 50px;
+                          width: 180px;
+                          bottom: 10%;
+                          left: 50%;
+                          @include browserSupport(transform, translate(-90px, 20%));
+
+                          box-sizing: border-box;
+                          $baseColor: #f7ffd3;
+                          background: $baseColor;
+                          border: 9px ridge darken($baseColor, 30%);
+                          border-radius: 50%;
+
+                          @include browserSupport(filter, blur(2px));
+
+                        }
+
+
+
+                      }
+                    }
+                  }
+
+
+
+
+                }
+                .event-text-box-disable{
+                  display:none;
+                }
+                .event-text-box{
+                  position:absolute;
+                  height:25%;
+                  width:80%;
+                  top:68%;
+                  left:10%;
+
+                  overflow: hidden;
+                  text-align: center;
+                  $colour : #eeffa0;
+                  background: linear-gradient(lighten($colour, 20%), lighten($colour, 10%));
+                  border: 5px ridge #eeffa0;
+
+                  .encounter-text{
+                    position:absolute;
+                    height:50%;
+                    top:0%;
+                    left:0%;
+                  }
+                  .evolve-text{
+                    position:absolute;
+                    height:100%;
+                    top:0%;
+                    left:0%;
+                  }
+
+                  span{
+                    width: 96%;
+                    padding: 2%;
+                    margin-top:10px;
+                    font-size: $fontSize;
+                  }
+                  .encounter-btn-container{
+                    position:absolute;
+                    height:50%;
+                    width:100%;
+                    top:50%;
+                    left: 50%;
+                    transform: translateX(-50%);
+
+                    .throw-btn{
+                      top:0% !important;
+                      left: 50% !important;
+                      transform: translateX(-50%);
+                      @include button-css(#324eff, 'Throw Pokeball', 40%, 70%);
+                      pointer-events: all;
+                      display:unset;
+                      max-width: 250px;
+                      span{
+                        font-size: 14px;
+                        font-weight:normal;
+                        padding:0 !important;
+
+                      }
+                      &:active{
+                        @include browserSupport(transform, scale(.98) translateX(-50%) !important);
+
+                      }
+                    }
+                  }
+
+                }
+              }
