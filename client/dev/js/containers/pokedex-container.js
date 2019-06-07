@@ -65,6 +65,9 @@ class PokedexContainer extends Component {
 
   }
 
+  //// TODO:
+  //Component mount, bring in all pokemon details from query into reducer-pokemon
+
     render() {
 
         return(

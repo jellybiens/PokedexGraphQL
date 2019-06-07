@@ -25,6 +25,9 @@ class EventEncounter extends Component {
       caughtArr.push(this.props.encounterId);
       this.props.pokemonCaught(caughtArr);
 
+      //TODO
+      //graphql update caught list
+
       this.props.activeIndex(pokemonId);
       this.props.previewIndex(pokemonId);
 
@@ -130,6 +133,19 @@ class EventEncounter extends Component {
                                                   </div>
                                             </div>
                         </div>
+                        <Mutation mutation={UPDATE_SCORE_POS}>
+                          {(updateCaught, { data }) => (
+                              <form className="submitPos"
+                                onSubmit={e => {
+                                  if(!this.context.userid) {; this.context.signout(); return <Redirect to="/" />}
+                                  e.preventDefault();
+                                  updateScorePos({ variables: { userid: this.context.userid, wordid: cardid } });
+                                }}
+                              >
+                              </form>
+                            )
+                          }
+                        </Mutation>
                       </div>
 
 

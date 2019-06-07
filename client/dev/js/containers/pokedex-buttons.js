@@ -40,11 +40,14 @@ class PokedexButtons extends Component {
                     return !caughtList.includes( (parseInt(mon.id) - 1) );
       } );
 
+    //// TODO: random between 1 and tot pokemon
     let randMon = unCaughtArr[Math.floor(Math.random() * unCaughtArr.length)]
     let randIndex = parseInt(randMon.id) - 1;
 
     let encounteredUpdated = this.updateArrPokemon(randIndex, encounteredList);
     this.props.pokemonEncountered(encounteredUpdated);
+    //TODO
+    // graphql update encounter list (if not encountered)
 
     this.props.encounterIndex(randIndex);
     this.props.eventMessage("A wild " + this.props.pokemonArr[randIndex].Name + " appeared!")
@@ -139,6 +142,21 @@ class PokedexButtons extends Component {
                                 }
                   ><span></span></div>
                 </div>
+
+                <Mutation mutation={UPDATE_SCORE_POS}>
+                  {(updateCaught, { data }) => (
+                      <form className="submitPos"
+                        onSubmit={e => {
+                          if(!this.context.userid) {; this.context.signout(); return <Redirect to="/" />}
+                          e.preventDefault();
+                          updateScorePos({ variables: { userid: this.context.userid, wordid: cardid } });
+                        }}
+                      >
+                      </form>
+                    )
+                  }
+                </Mutation>
+
               </div>
             );
 
